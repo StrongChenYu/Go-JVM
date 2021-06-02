@@ -26,6 +26,8 @@ func (self *ZipEntry) readClass(className string) ([]byte, Entry, error) {
 	}
 
 	defer r.Close()
+	//zip.OpenReader会把当前目录下所有的文件都解压出来
+	//包括子目录下的文件
 	for _, f := range r.File {
 		if  f.Name == className {
 			rc, err := f.Open()

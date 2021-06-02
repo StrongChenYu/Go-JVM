@@ -14,6 +14,7 @@ func newWildcardEntry(path string) CompositeEntry {
 			return err
 		}
 
+		//这句话的意思是只检测第一级目录下的jar文件包
 		if info.IsDir() && path != baseDir {
 			return filepath.SkipDir
 		}
