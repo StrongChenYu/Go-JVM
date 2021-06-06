@@ -10,7 +10,7 @@ func (c *ConstantStringInfo) readInfo(reader *ClassReader) {
 }
 
 func (c *ConstantStringInfo) String() string {
-	return ""
+	return c.cp.getUtf8(c.stringIndex)
 }
 
 

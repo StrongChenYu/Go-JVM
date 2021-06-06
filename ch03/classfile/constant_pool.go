@@ -17,6 +17,12 @@ func readConstantPool(reader *ClassReader) ConstantPool {
 	return cp
 }
 
+func (cp ConstantPool) getUtf8(index uint16) string {
+	utf8Info := cp.getConstantInfo(index).(*ConstantUtf8Info)
+	return utf8Info.str
+}
+
+
 func (receiver ConstantPool) getConstantInfo(index uint16) ConstantInfo  {
 	if cpInfo := receiver[index]; cpInfo != nil {
 		return cpInfo
