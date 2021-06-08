@@ -20,6 +20,7 @@ func (c *ConstantFloatInfo) readInfo(reader *ClassReader) {
 	c.val = math.Float32frombits(bytes)
 }
 
+//Long类型
 type ConstantLongInfo struct {
 	val int64
 }
@@ -29,6 +30,7 @@ func (c *ConstantLongInfo) readInfo(reader *ClassReader) {
 	c.val = int64(bytes)
 }
 
+//Double类型
 type ConstantDoubleInfo struct {
 	val float64
 }

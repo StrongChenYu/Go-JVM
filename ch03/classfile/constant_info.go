@@ -12,6 +12,7 @@ const (
 	CONSTANT_Double					= 6
 	CONSTANT_NameAndType			= 12
 	CONSTANT_Utf8					= 1
+	CONSTANT_MethodHandler			= 15
 	CONSTANT_MethodType				= 16
 	CONSTANT_InvokeDynamic			= 18
 )
