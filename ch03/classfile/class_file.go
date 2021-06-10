@@ -53,7 +53,7 @@ func (cf *ClassFile) read(reader *ClassReader)  {
 	//读取field
 	cf.fields = readMembers(reader, cf.constantPool)
 	//读取method
-	cf.fields = readMembers(reader, cf.constantPool)
+	cf.methods = readMembers(reader, cf.constantPool)
 	//读取attribute
 	cf.attributes = readAttributes(reader, cf.constantPool)
 }
@@ -121,4 +121,18 @@ func (cf *ClassFile) ConstantPool() ConstantPool {
 	return cf.constantPool
 }
 
+func (cf *ClassFile) ClassName() string {
+	return cf.constantPool.getClassName(cf.thisClass)
+}
 
+func (cf *ClassFile) SuperClassName() string {
+	return cf.constantPool.getClassName(cf.superClass)
+}
+
+func (cf *ClassFile) InterfaceName() []string {
+	names := make([]string, len(cf.interfaces))
+	for i := range names {
+		names[i] = cf.constantPool.getClassName(cf.interfaces[i])
+	}
+	return names
+}

@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"go-jvm/ch03/classfile"
+	"go-jvm/ch03/classpath"
 	"strings"
 )
-import "go-jvm/ch02/classpath"
 
 func main() {
 	cmd := parseCmd()
@@ -22,11 +23,46 @@ func startJVM(cmd *Cmd) {
 	fmt.Printf("classpath:%s class:%s args:%v\n", cmd.cpOption, cmd.class, cmd.args)
 
 	className := strings.Replace(cmd.class, ".", "/", -1)
-	classData, _, err := cp.ReadClass(className)
+	cf := loadClass(className, cp)
+	fmt.Println(cmd.class)
+	printClassInfo(cf)
+}
+
+
+func loadClass(class string, cp *classpath.Classpath) *classfile.ClassFile {
+	//读取类数据
+	classData, _, err := cp.ReadClass(class)
 	if err != nil {
-		fmt.Printf("Could not find or load main class %s \n", cmd.class)
-		return
+		panic(err)
 	}
-	fmt.Println(cp.String())
-	fmt.Printf("class data: %v\n", classData)
+
+	//解析class数据
+	cf, err := classfile.Parse(classData)
+	if err != nil {
+		panic(err)
+	}
+
+	return cf
+}
+
+
+//打印类相关的信息
+func printClassInfo(cf *classfile.ClassFile) {
+	fmt.Printf("version: %v.%v\n", cf.MajorVersion(), cf.MinorVersion())
+	fmt.Printf("constants count: %v\n", len(cf.ConstantPool()))
+	fmt.Printf("access flags: 0x%x\n", cf.AccessFlags())
+	fmt.Printf("this class: %v\n", cf.ClassName())
+	fmt.Printf("super class: %v\n", cf.SuperClassName())
+	fmt.Printf("interfaces: %v\n", cf.InterfaceName())
+
+	fmt.Printf("fields count: %v\n", len(cf.Fields()))
+	for _, f := range cf.Fields() {
+		fmt.Printf("    %s\n", f.Name())
+	}
+
+	fmt.Printf("methods count: %v\n", len(cf.Methods()))
+	for _, m := range cf.Methods() {
+		fmt.Printf("    %s\n", m.Name())
+	}
+
 }

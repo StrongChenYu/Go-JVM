@@ -41,6 +41,6 @@ func (receiver *ClassReader) readUnit16s() []uint16 {
 
 func (receiver *ClassReader) readBytes(length uint32) []byte {
 	s := receiver.data[:length]
-	receiver.data = receiver.data[:length]
+	receiver.data = receiver.data[length:]
 	return s
 }
