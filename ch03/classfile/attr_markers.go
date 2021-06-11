@@ -1,5 +1,7 @@
 package classfile
 
+//这部分是markers属性，不占用任何位置
+
 type DeprecatedAttribute struct {
 	MarkerAttribute
 }

@@ -1,5 +1,9 @@
 package classfile
 
+/**
+	常量值的索引位置，
+	这个索引可以指向Constant_Integer,Constant_Long等一系列
+ */
 type ConstantValueAttribute struct {
 	constantValueIdx 		uint16
 }

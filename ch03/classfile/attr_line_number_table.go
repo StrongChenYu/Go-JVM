@@ -1,10 +1,5 @@
 package classfile
 
-type LineNumberTableEntry struct {
-	startPc			uint16
-	lineNumber 		uint16
-}
-
 type LineNumberTableAttribute struct {
 	lineNumberTable 		[]*LineNumberTableEntry
 }
@@ -22,5 +17,8 @@ func (l *LineNumberTableAttribute) readInfo(reader *ClassReader) {
 	}
 }
 
-
+type LineNumberTableEntry struct {
+	startPc			uint16
+	lineNumber 		uint16
+}
 

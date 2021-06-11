@@ -1,5 +1,8 @@
 package classfile
 
+/**
+	描述属性表中的code属性
+ */
 type CodeAttribute struct {
 	cp 				ConstantPool
 	maxStack		uint16
@@ -25,6 +28,11 @@ func (c *CodeAttribute) readInfo(reader *ClassReader) {
 	c.attributes = readAttributes(reader, c.cp)
 }
 
+/**
+	读取exception表
+	1.先读取长度
+	2.然后读取每一个exception表
+ */
 func readExceptionTable(reader *ClassReader) []*ExceptionTableEntry {
 	exceptionLength := reader.readUnit16()
 	exceptionTable := make([]*ExceptionTableEntry, exceptionLength)
@@ -40,6 +48,7 @@ func readExceptionTable(reader *ClassReader) []*ExceptionTableEntry {
 
 	return exceptionTable
 }
+
 
 type ExceptionTableEntry struct {
 	startPc			uint16
