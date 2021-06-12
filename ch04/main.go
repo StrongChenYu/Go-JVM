@@ -32,7 +32,9 @@ func testOperandStack(stack *rtda.OperandStack) {
 	stack.PushFloat(3.1415926)
 	stack.PushDouble(2.71828182845)
 	stack.PushRef(nil)
+	stack.PushRef(nil)
 
+	println(stack.PopRef())
 	fmt.Println(stack.PopRef())
 	println(stack.PopDouble())
 	println(stack.PopFloat())
