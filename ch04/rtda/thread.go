@@ -1,7 +1,9 @@
 package rtda
 
 type Thread struct {
+	//Thread的PC指针
 	pc 		int
+	//线程栈
 	stack   *Stack
 }
 

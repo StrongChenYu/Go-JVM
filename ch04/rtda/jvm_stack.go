@@ -1,9 +1,13 @@
 package rtda
 
+
+/*
+	Stack是一个Frame的单向链表
+	所以需要记录他的最大长度和目前的长度
+ */
 type Stack struct {
 	maxSize 	uint
 	size    	uint
-	//frame链表大小
 	_top		*Frame
 }
 
