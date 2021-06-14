@@ -47,17 +47,5 @@ func (self *Index16Instruction) FetchOperands(reader *ByteCodeReader) {
 	self.Index = uint(reader.ReadUint16())
 }
 
-
-
 func (self Index16Instruction) Execute(frame *rtda.Frame) {
 }
-
-
-
-
-
-
-
-
-
-
