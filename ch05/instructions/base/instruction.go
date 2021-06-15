@@ -11,9 +11,9 @@ type NoOperandsInstruction struct {
 
 }
 
-func (n *NoOperandsInstruction) FetchOperands(reader *ByteCodeReader) {
-
-}
+//func (n *NoOperandsInstruction) FetchOperands(reader *ByteCodeReader) {
+//
+//}
 
 func (n *NoOperandsInstruction) Execute(frame *rtda.Frame) {
 

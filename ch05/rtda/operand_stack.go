@@ -84,4 +84,19 @@ func (self *OperandStack) PopRef() *Object {
 	return ref
 }
 
+//为了实现栈指令
+func (self *OperandStack) PushSlot(slot Slot) {
+	self.slots[self.size] = slot
+	self.size++
+}
+
+func (self *OperandStack) PopSlot() Slot {
+	self.size--
+	return self.slots[self.size]
+}
+
+//获取操作数栈的大小
+func (self *OperandStack) Size() uint {
+	return self.size
+}
 
