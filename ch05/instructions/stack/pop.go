@@ -6,6 +6,7 @@ import (
 )
 
 type POP struct { base.NoOperandsInstruction }
+//pop两个值出来
 type POP2 struct { base.NoOperandsInstruction }
 
 func (p *POP) Execute(frame *rtda.Frame)  {

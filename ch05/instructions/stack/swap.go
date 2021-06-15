@@ -5,6 +5,9 @@ import (
 	"go-jvm/ch05/rtda"
 )
 
+//交换位于栈顶的两个值的位置
+//....[a][b]->
+//....[b][a]->
 type SWAP struct { base.NoOperandsInstruction }
 
 func (self *SWAP) Execute(frame *rtda.Frame)  {
