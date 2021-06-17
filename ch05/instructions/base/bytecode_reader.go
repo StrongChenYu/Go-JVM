@@ -44,4 +44,17 @@ func (self *ByteCodeReader) ReadInt16() int16 {
 	return int16(self.ReadUint16())
 }
 
+//将pc对齐到4的倍数的位置
+func (self *ByteCodeReader) SkipPadding()  {
+	for self.pc % 4 != 0 {
+		self.ReadUint8()
+	}
+}
 
+func (self *ByteCodeReader) ReadInt32s(length int32) []int32 {
+	ints := make([]int32, length)
+	for i := range ints {
+		ints[i] = self.ReadInt32()
+	}
+	return ints
+}
