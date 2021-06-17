@@ -12,6 +12,10 @@ type CodeAttribute struct {
 	attributes		[]AttributeInfo
 }
 
+func (c *CodeAttribute) Code() []byte {
+	return c.code
+}
+
 func (c *CodeAttribute) readInfo(reader *ClassReader) {
 	//读取maxStack和maxLocals
 	c.maxStack = reader.readUnit16()
@@ -26,6 +30,14 @@ func (c *CodeAttribute) readInfo(reader *ClassReader) {
 
 	//读取code中的attribute表
 	c.attributes = readAttributes(reader, c.cp)
+}
+
+func (c *CodeAttribute) MaxStack() uint16 {
+	return c.maxStack
+}
+
+func (c *CodeAttribute) MaxLocals() uint16 {
+	return c.maxLocals
 }
 
 /**
@@ -56,3 +68,5 @@ type ExceptionTableEntry struct {
 	handlerPc		uint16
 	catchType		uint16
 }
+
+

@@ -30,3 +30,14 @@ func readerMember(reader *ClassReader, pool ConstantPool) *MemberInfo {
 func (m *MemberInfo) Name() string {
 	return m.cp.getUtf8(m.nameIndex)
 }
+
+//?????????attrInfo.(type) 这种语法到底是什么含义
+func (self *MemberInfo) CodeAttribute() *CodeAttribute {
+	for _, attrInfo := range self.attributes {
+		switch attrInfo.(type) {
+		case *CodeAttribute:
+			return attrInfo.(*CodeAttribute)
+		}
+	}
+	return nil
+}
