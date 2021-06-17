@@ -41,3 +41,7 @@ func (self *MemberInfo) CodeAttribute() *CodeAttribute {
 	}
 	return nil
 }
+
+func (m *MemberInfo) Descriptor() string {
+	return m.cp.getUtf8(m.descriptorIndex)
+}

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"go-jvm/ch03/classfile"
-	"go-jvm/ch03/classpath"
-	"go-jvm/ch04/rtda"
+	"go-jvm/ch05/classfile"
+	"go-jvm/ch05/classpath"
+	"strings"
 )
 
 func main() {
@@ -14,52 +14,23 @@ func main() {
 	} else if cmd.helpFlag || cmd.class == "" {
 		printUsage()
 	} else {
-		startJVM(cmd)
+		 startJVM(cmd)
 	}
 }
 
 func startJVM(cmd *Cmd) {
-	frame := rtda.NewFrame(100,100)
-	testLocalVars(frame.LocalVars())
-	testOperandStack(frame.OperandStack())
-}
+	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
+	fmt.Printf("classpath:%s class:%s args:%v\n", cmd.cpOption, cmd.class, cmd.args)
 
-func testOperandStack(stack *rtda.OperandStack) {
-	stack.PushInt(100)
-	stack.PushInt(-100)
-	stack.PushLong(2997924580)
-	stack.PushLong(-2997924580)
-	stack.PushFloat(3.1415926)
-	stack.PushDouble(2.71828182845)
-	stack.PushRef(nil)
-	stack.PushRef(nil)
+	className := strings.Replace(cmd.class, ".", "/", -1)
+	cf := loadClass(className, cp)
+	fmt.Println(cmd.class)
+	printClassInfo(cf)
 
-	println(stack.PopRef())
-	fmt.Println(stack.PopRef())
-	println(stack.PopDouble())
-	println(stack.PopFloat())
-	println(stack.PopLong())
-	println(stack.PopLong())
-	println(stack.PopInt())
-	println(stack.PopInt())
-}
-
-func testLocalVars(vars rtda.LocalVars) {
-	vars.SetInt(0, 100)
-	vars.SetInt(1, -100)
-	vars.SetLong(2, 2997924580)
-	vars.SetLong(4, -2997924580)
-	vars.SetFloat(6, 3.1415926)
-	vars.SetDouble(7, 2.71828182845)
-	vars.SetRef(9, nil)
-
-	fmt.Println(vars.GetInt(0))
-	fmt.Println(vars.GetInt(1))
-	fmt.Println(vars.GetLong(2))
-	fmt.Println(vars.GetLong(4))
-	fmt.Println(vars.GetFloat(6))
-	fmt.Println(vars.GetDouble(7))
-	fmt.Println(vars.GetRef(9))
+	mainMethod := getMainMethod(cf)
+	if mainMethod != nil {
+		interpret(mainMethod)
+	}
 }
 
 
@@ -77,6 +48,15 @@ func loadClass(class string, cp *classpath.Classpath) *classfile.ClassFile {
 	}
 
 	return cf
+}
+
+func getMainMethod(cf *classfile.ClassFile) *classfile.MemberInfo  {
+	for _, m := range cf.Methods() {
+		if m.Name() == "main" {
+			return m
+		}
+	}
+	return nil
 }
 
 
@@ -97,6 +77,7 @@ func printClassInfo(cf *classfile.ClassFile) {
 	fmt.Printf("methods count: %v\n", len(cf.Methods()))
 	for _, m := range cf.Methods() {
 		fmt.Printf("    %s\n", m.Name())
+		fmt.Printf("    %s\n", m.Descriptor())
 	}
 
 }

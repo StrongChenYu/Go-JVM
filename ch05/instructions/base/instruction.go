@@ -11,9 +11,9 @@ type NoOperandsInstruction struct {
 
 }
 
-//func (n *NoOperandsInstruction) FetchOperands(reader *ByteCodeReader) {
-//
-//}
+func (n *NoOperandsInstruction) FetchOperands(reader *ByteCodeReader) {
+}
+
 
 func (n *NoOperandsInstruction) Execute(frame *rtda.Frame) {
 
@@ -35,9 +35,13 @@ type Index8Instruction struct {
 	Index 		uint
 }
 
+func (self *Index8Instruction) Execute(frame *rtda.Frame) {
+}
+
 func (self *Index8Instruction) FetchOperands(reader *ByteCodeReader)  {
 	self.Index = uint(reader.ReadUint8())
 }
+
 
 type Index16Instruction struct {
 	Index 		uint

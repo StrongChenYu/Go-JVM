@@ -5,6 +5,10 @@ type ByteCodeReader struct {
 	pc 			int
 }
 
+func (self *ByteCodeReader) PC() int {
+	return self.pc
+}
+
 //重置定位到的字节码
 func (self *ByteCodeReader) Reset(code []byte, pc int)  {
 	self.pc = pc

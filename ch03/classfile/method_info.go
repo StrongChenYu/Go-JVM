@@ -30,3 +30,7 @@ func readerMember(reader *ClassReader, pool ConstantPool) *MemberInfo {
 func (m *MemberInfo) Name() string {
 	return m.cp.getUtf8(m.nameIndex)
 }
+
+func (m *MemberInfo) Descriptor() string {
+	return m.cp.getUtf8(m.descriptorIndex)
+}
