@@ -8,6 +8,7 @@ type MemberInfo struct {
 	attributes 			[]AttributeInfo
 }
 
+
 func readMembers(reader *ClassReader, pool ConstantPool) []*MemberInfo {
 	memberCount := reader.readUnit16()
 	members := make([]*MemberInfo, memberCount)
@@ -27,6 +28,11 @@ func readerMember(reader *ClassReader, pool ConstantPool) *MemberInfo {
 	}
 }
 
+
+func (m *MemberInfo) AccessFlags() uint16 {
+	return m.accessFlags
+}
+
 func (m *MemberInfo) Name() string {
 	return m.cp.getUtf8(m.nameIndex)
 }
@@ -42,6 +48,7 @@ func (self *MemberInfo) CodeAttribute() *CodeAttribute {
 	return nil
 }
 
+//Descriptor
 func (m *MemberInfo) Descriptor() string {
 	return m.cp.getUtf8(m.descriptorIndex)
 }
