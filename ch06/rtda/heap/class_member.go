@@ -15,3 +15,8 @@ func (self *ClassMember) copyMemberInfo(memberInfo *classfile.MemberInfo)  {
 	self.name = memberInfo.Name()
 	self.descriptor = memberInfo.Descriptor()
 }
+
+func (self *ClassMember) Descriptor() string {
+	return self.descriptor
+}
+

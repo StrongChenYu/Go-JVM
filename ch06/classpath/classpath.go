@@ -19,6 +19,8 @@ func Parse(jreOption, cpOption string) *Classpath {
 
 }
 
+//input: 类的全限定名的路径格式 java/lang/Object.class
+//output: []byte数组
 func (self *Classpath) ReadClass(className string) ([]byte, Entry, error) {
 	className = className + ".class"
 	if data, entry, err := self.bootClasspath.readClass(className); err == nil {

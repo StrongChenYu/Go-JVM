@@ -129,7 +129,7 @@ func (cf *ClassFile) SuperClassName() string {
 	return cf.constantPool.getClassName(cf.superClass)
 }
 
-func (cf *ClassFile) InterfaceName() []string {
+func (cf *ClassFile) InterfaceNames() []string {
 	names := make([]string, len(cf.interfaces))
 	for i := range names {
 		names[i] = cf.constantPool.getClassName(cf.interfaces[i])

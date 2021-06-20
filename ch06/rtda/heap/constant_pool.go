@@ -1,9 +1,14 @@
 package heap
 
-import "go-jvm/ch06/classfile"
+import (
+	"fmt"
+	"go-jvm/ch06/classfile"
+)
 
 type Constant interface {}
 
+//常量池
+//注意是运行时常量池
 type ConstantPool struct {
 	class 		*Class
 	consts		[]Constant
@@ -58,4 +63,13 @@ func newConstantPool(class *Class, cfCp classfile.ConstantPool) *ConstantPool {
 	}
 
 	return rtCp
+}
+
+
+//????????????这里索引和类文件里面的常量池索引一样吗？？？？？？？
+func (self *ConstantPool) GetConstant(index uint) Constant {
+	if c := self.consts[index]; c != nil {
+		return c
+	}
+	panic(fmt.Sprintf("No constants at index %d", index))
 }

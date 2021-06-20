@@ -52,3 +52,14 @@ func (self *MemberInfo) CodeAttribute() *CodeAttribute {
 func (m *MemberInfo) Descriptor() string {
 	return m.cp.getUtf8(m.descriptorIndex)
 }
+
+//如果field实现被定义好，那么返回存储在常量池中的索引
+func (self *MemberInfo) ConstantValueAttribute() *ConstantValueAttribute {
+	for _, attrInfo := range self.attributes {
+		switch attrInfo.(type) {
+		case *ConstantValueAttribute:
+			return attrInfo.(*ConstantValueAttribute)
+		}
+	}
+	return nil
+}
