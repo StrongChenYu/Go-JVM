@@ -1,6 +1,9 @@
 package heap
 
-import "go-jvm/ch06/classfile"
+import (
+	"go-jvm/ch06/classfile"
+	"strings"
+)
 
 type Class struct {
 	accessFlags 			uint16
@@ -31,4 +34,22 @@ func newClass(cf *classfile.ClassFile) *Class {
 	class.fields = newFields(class, cf.Fields())
 	class.methods = newMethods(class, cf.Methods())
 	return class
+}
+
+
+func (self *Class) isAccessibleTo(other *Class) bool {
+	return self.IsPublic() || self.getPackageName() == other.getPackageName()
+}
+
+func (self *Class) IsPublic() bool {
+	return self.accessFlags & ACC_PUBLIC != 0
+}
+
+//input : java/lang/Object
+//output: java/lang
+func (self *Class) getPackageName() string {
+	if i := strings.LastIndex(self.name, "/"); i >= 0 {
+		return self.name[:i]
+	}
+	return ""
 }

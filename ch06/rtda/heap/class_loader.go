@@ -27,7 +27,7 @@ func NewClassLoader(cp *classpath.Classpath) *ClassLoader {
 //						|
 //						----------> link------> verify (do nothing)
 //										|
-//									link------> prepare (cal field id in slots (include static, and init static field))
+//										------> prepare (cal field index in slots (include static, and init static field))
 func (self *ClassLoader) LoadClass(name string) *Class {
 	if class, ok := self.classMap[name]; ok {
 		return class
@@ -61,6 +61,7 @@ func (self *ClassLoader) readClass(name string) ([]byte, classpath.Entry) {
 
 func (self *ClassLoader) defineClass(data []byte) *Class {
 	class := parseClass(data)
+	//!!!!!!!!!!!!!!!!!!!!!!!
 	class.loader = self
 	resolveSuperClass(class)
 	resolveInterfaces(class)
