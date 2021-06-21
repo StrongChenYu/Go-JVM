@@ -5,7 +5,7 @@ import "go-jvm/ch06/classfile"
 type Field struct {
 	ClassMember
 	constsValueIndex 	uint
-	slodId 				uint
+	slotId 				uint
 }
 
 
@@ -45,5 +45,5 @@ func (self *Field) ConstsValueIndex() uint {
 
 
 func (self *Field) SlodId() uint {
-	return self.slodId
+	return self.slotId
 }

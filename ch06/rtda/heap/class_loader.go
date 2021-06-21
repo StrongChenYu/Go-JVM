@@ -1,6 +1,7 @@
 package heap
 
 import (
+	"fmt"
 	"go-jvm/ch06/classfile"
 	"go-jvm/ch06/classpath"
 )
@@ -20,6 +21,13 @@ func NewClassLoader(cp *classpath.Classpath) *ClassLoader {
 }
 
 //加载类
+//loadClass -> loadNonArrayClass -> readClass(read byte data)
+//						|
+//						----------> defineClass(byte data ---> Class)
+//						|
+//						----------> link------> verify (do nothing)
+//										|
+//									link------> prepare (cal field id in slots (include static, and init static field))
 func (self *ClassLoader) LoadClass(name string) *Class {
 	if class, ok := self.classMap[name]; ok {
 		return class
@@ -28,7 +36,17 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 }
 
 func (self *ClassLoader) loadNonArrayClass(name string) *Class {
-	return nil
+	data, entry := self.readClass(name)
+	class := self.defineClass(data)
+	link(class)
+	fmt.Printf("[Loaded %s from %s]\n", name, entry)
+	return class
+}
+
+
+func link(class *Class) {
+	verify(class)
+	prepare(class)
 }
 
 func (self *ClassLoader) readClass(name string) ([]byte, classpath.Entry) {
@@ -39,6 +57,7 @@ func (self *ClassLoader) readClass(name string) ([]byte, classpath.Entry) {
 
 	return data, entry
 }
+
 
 func (self *ClassLoader) defineClass(data []byte) *Class {
 	class := parseClass(data)
@@ -76,31 +95,36 @@ func resolveSuperClass(class *Class) {
 }
 
 
-func link(class *Class) {
-	verify(class)
-	prepare(class)
-}
-
 func verify(class *Class) {
 	//DO NOTHING
 	//see java specification 4.10
 }
 
 func prepare(class *Class) {
-	calcInstanceFieldSlotFields(class)
+	calcInstanceFieldSlotIds(class)
 	calcStaticFieldSlotFields(class)
 	allocAndInitStaticVars(class)
 }
 
-func calcInstanceFieldSlotFields(class *Class)  {
+//type Object struct {
+//	//用于存放引用类型
+//	class 		*Class
+//	fields 		Slots
+//}
+//这部分计算的是，field中的值，在object中的fields中的index
+//Java中的静态变量都存储在类中，非静态变量都存储在实例化的Object中
+func calcInstanceFieldSlotIds(class *Class)  {
 	slotId := uint(0)
 	if class.superClass != nil {
+		//考虑来自父类
 		slotId = class.superClass.instanceSlotCount
 	}
 
+	//找到类中的每一个非静态
+	//然后根据这个非静态属性
 	for _, field := range class.fields {
 		if !field.IsStatic() {
-			field.slodId = slotId
+			field.slotId = slotId
 			slotId++
 			if field.IsLongOrDouble() {
 				slotId++
@@ -110,11 +134,13 @@ func calcInstanceFieldSlotFields(class *Class)  {
 	class.instanceSlotCount = slotId
 }
 
+//这部分计算的是java类中的静态变量索引
+//因为静态变量是属于类的，所以即存储在class.staticVars中
 func calcStaticFieldSlotFields(class *Class) {
 	slotId := uint(0)
 	for _, field := range class.fields {
 		if field.IsStatic() {
-			field.slodId = slotId
+			field.slotId = slotId
 			slotId++
 			if field.IsLongOrDouble() {
 				slotId++
@@ -124,6 +150,7 @@ func calcStaticFieldSlotFields(class *Class) {
 	class.staticSlotCount = slotId
 }
 
+//然后给静态变量初始化
 func allocAndInitStaticVars(class *Class) {
 	class.staticVars = newSlots(class.staticSlotCount)
 	for _, field := range class.fields {
