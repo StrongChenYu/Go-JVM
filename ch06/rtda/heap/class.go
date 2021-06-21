@@ -37,12 +37,20 @@ func newClass(cf *classfile.ClassFile) *Class {
 }
 
 
-func (self *Class) isAccessibleTo(other *Class) bool {
+func (self *Class) IsAccessibleTo(other *Class) bool {
 	return self.IsPublic() || self.getPackageName() == other.getPackageName()
 }
 
 func (self *Class) IsPublic() bool {
 	return self.accessFlags & ACC_PUBLIC != 0
+}
+
+func (self *Class) IsInterface() bool {
+	return self.accessFlags & ACC_INTERFACE != 0
+}
+
+func (self *Class) IsAbstract() bool {
+	return self.accessFlags & ACC_ABSTRACT != 0
 }
 
 //input : java/lang/Object
@@ -52,4 +60,24 @@ func (self *Class) getPackageName() string {
 		return self.name[:i]
 	}
 	return ""
+}
+
+
+func (self *Class) ConstantPool() *ConstantPool {
+	return self.constantPool
+}
+
+func (self *Class) NewObject() *Object {
+	return newObject(self)
+}
+
+func newObject(class *Class) *Object {
+	return &Object{
+		class:  class,
+		fields: newSlots(class.instanceSlotCount),
+	}
+}
+
+func (self *Class) StaticVars() Slots {
+	return self.staticVars
 }

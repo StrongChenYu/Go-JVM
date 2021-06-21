@@ -18,8 +18,11 @@ func (self *SymRef) ResolvedClass() *Class {
 
 func (self *SymRef) resolveClassRef()  {
 	d := self.cp.class
+	//d是常量池
+	//self是class d的常量池符号引用
+	//使用d的类加载器去加载c
 	c := d.loader.LoadClass(self.className)
-	if !c.isAccessibleTo(d) {
+	if !c.IsAccessibleTo(d) {
 		panic("java.lang.IllegalAccessError")
 	}
 	self.class = c

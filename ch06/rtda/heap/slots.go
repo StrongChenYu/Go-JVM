@@ -11,10 +11,10 @@ type Slot struct {
 //局部变量表
 type Slots []Slot
 
-//new一个局部变量表
-func newSlots(maxLocals uint) Slots {
-	if maxLocals > 0 {
-		return make([]Slot, maxLocals)
+//new一个field槽
+func newSlots(fieldCount uint) Slots {
+	if fieldCount > 0 {
+		return make([]Slot, fieldCount)
 	}
 	return nil
 }
