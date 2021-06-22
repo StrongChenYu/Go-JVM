@@ -16,6 +16,10 @@ func (self *SymRef) ResolvedClass() *Class {
 	return self.class
 }
 
+//解析类符号引用：
+//1. 加载这个类
+//2. 判断对这个类有没有访问权限
+//3. 保存解析引用，防止重复解析
 func (self *SymRef) resolveClassRef()  {
 	d := self.cp.class
 	//d是常量池

@@ -13,3 +13,7 @@ func (o Object) Class() *Class {
 func (o Object) Fields() Slots {
 	return o.fields
 }
+
+func (o *Object) IsInstanceOf(class *Class) bool {
+	return class.isAssignableFrom(o.class)
+}
