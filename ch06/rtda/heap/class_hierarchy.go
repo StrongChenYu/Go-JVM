@@ -2,7 +2,7 @@ package heap
 
 //check operation follow
 //self a = instance (other type)
-func (self *Class) isAssignableFrom(other *Class) bool {
+func (self *Class) IsAssignableFrom(other *Class) bool {
 
 	//判断是否相等
 	if other == self {
