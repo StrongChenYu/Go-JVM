@@ -1,8 +1,8 @@
 package stack
 
 import (
-	"go-jvm/ch05/instructions/base"
-	"go-jvm/ch05/rtda"
+	"go-jvm/ch06/instructions/base"
+	"go-jvm/ch06/rtda"
 )
 
 //交换位于栈顶的两个值的位置

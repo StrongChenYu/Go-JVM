@@ -1,8 +1,8 @@
 package stores
 
 import (
-	"go-jvm/ch05/instructions/base"
-	"go-jvm/ch05/rtda"
+	"go-jvm/ch06/instructions/base"
+	"go-jvm/ch06/rtda"
 )
 
 //将操作数栈顶Long类型数据放到位置为i的LocalVars

@@ -1,8 +1,8 @@
 package math
 
 import (
-	"go-jvm/ch05/instructions/base"
-	"go-jvm/ch05/rtda"
+	"go-jvm/ch06/instructions/base"
+	"go-jvm/ch06/rtda"
 )
 
 //加法指令

@@ -81,3 +81,16 @@ func newObject(class *Class) *Object {
 func (self *Class) StaticVars() Slots {
 	return self.staticVars
 }
+
+func (self *Class) GetMainMethod() *Method {
+	return self.getStaticMethod("main", "([Ljava/lang/String;)V")
+}
+
+func (self *Class) getStaticMethod(name,descriptor string) *Method {
+	for _, method := range self.methods {
+		if method.Descriptor() == descriptor && method.Name() == name {
+			return method
+		}
+	}
+	return nil
+}

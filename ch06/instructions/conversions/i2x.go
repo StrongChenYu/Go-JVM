@@ -1,8 +1,8 @@
 package conversions
 
 import (
-	"go-jvm/ch05/instructions/base"
-	"go-jvm/ch05/rtda"
+	"go-jvm/ch06/instructions/base"
+	"go-jvm/ch06/rtda"
 )
 
 //int 型数据转换

@@ -20,11 +20,12 @@ func (self *Frame) NextPC() int {
 	return self.nextPC
 }
 
-func NewFrame(thread *Thread, maxLocals, maxStack uint) *Frame {
+func NewFrame(thread *Thread, method *heap.Method) *Frame {
 	return &Frame{
 		thread: thread,
-		localVars:    newLocalVars(maxLocals),
-		operandStack: newOperandStack(maxStack),
+		method: method,
+		localVars:    newLocalVars(method.MaxLocal()),
+		operandStack: newOperandStack(method.MaxStack()),
 	}
 }
 

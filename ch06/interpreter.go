@@ -2,24 +2,20 @@ package main
 
 import (
 	"fmt"
-	"go-jvm/ch05/classfile"
-	"go-jvm/ch05/instructions"
-	"go-jvm/ch05/instructions/base"
-	"go-jvm/ch05/rtda"
+	"go-jvm/ch06/instructions"
+	"go-jvm/ch06/instructions/base"
+	"go-jvm/ch06/rtda"
+	"go-jvm/ch06/rtda/heap"
 )
 
-func interpret(methodInfo *classfile.MemberInfo)  {
-	codeAttr := methodInfo.CodeAttribute()
-	maxLocals := codeAttr.MaxLocals()
-	maxStack := codeAttr.MaxStack()
-	byteCode := codeAttr.Code()
+func interpret(method *heap.Method)  {
 
 	thread := rtda.NewThread()
-	frame := thread.NewFrame(uint(maxLocals), uint(maxStack))
+	frame := thread.NewFrame(method)
 	thread.PushFrame(frame)
 
 	defer catchErr(frame)
-	loop(thread, byteCode)
+	loop(thread, method.Code())
 }
 
 

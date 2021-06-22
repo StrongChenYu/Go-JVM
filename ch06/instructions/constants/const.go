@@ -1,8 +1,8 @@
 package constants
 
 import (
-	"go-jvm/ch05/rtda"
-	"go-jvm/ch05/instructions/base"
+	"go-jvm/ch06/rtda"
+	"go-jvm/ch06/instructions/base"
 )
 
 //这些都是无操作数指令，单纯的将一个常量压入操作数栈

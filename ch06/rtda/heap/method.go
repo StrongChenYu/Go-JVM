@@ -31,5 +31,14 @@ func (self *Method) copyCodeAttributes(cfMethod *classfile.MemberInfo)  {
 	}
 }
 
+func (self *Method) Code() []byte {
+	return self.code
+}
 
+func (self *Method) MaxLocal() uint {
+	return self.maxLocal
+}
 
+func (self *Method) MaxStack() uint {
+	return self.maxStack
+}

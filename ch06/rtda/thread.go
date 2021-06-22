@@ -1,5 +1,7 @@
 package rtda
 
+import "go-jvm/ch06/rtda/heap"
+
 type Thread struct {
 	//Thread的PC指针
 	pc 		int
@@ -34,6 +36,6 @@ func (self *Thread) CurrentFrame() *Frame {
 	return self.stack.top()
 }
 
-func (self *Thread) NewFrame(maxLocals, maxStack uint) *Frame {
-	return NewFrame(self, maxLocals, maxStack)
+func (self *Thread) NewFrame(method *heap.Method) *Frame {
+	return NewFrame(self, method)
 }

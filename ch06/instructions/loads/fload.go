@@ -1,8 +1,8 @@
 package loads
 
 import (
-	"go-jvm/ch05/instructions/base"
-	"go-jvm/ch05/rtda"
+	"go-jvm/ch06/instructions/base"
+	"go-jvm/ch06/rtda"
 )
 
 //把index位置的localVars处的变量加载到操作数栈里面

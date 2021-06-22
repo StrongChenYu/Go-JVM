@@ -1,8 +1,8 @@
 package comparisons
 
 import (
-	"go-jvm/ch05/instructions/base"
-	"go-jvm/ch05/rtda"
+	"go-jvm/ch06/instructions/base"
+	"go-jvm/ch06/rtda"
 )
 
 //将栈顶的两个值弹出，然后比较，如果满足条件就跳转

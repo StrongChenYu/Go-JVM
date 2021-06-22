@@ -90,7 +90,7 @@ func resolveInterfaces(class *Class) {
 }
 
 func resolveSuperClass(class *Class) {
-	if class.name != "java/lang/Object" {
+	if class.superClassName != "java/lang/Object" {
 		class.superClass = class.loader.LoadClass(class.superClassName)
 	}
 }

@@ -1,11 +1,11 @@
 package extended
 
 import (
-	"go-jvm/ch05/instructions/base"
-	"go-jvm/ch05/instructions/loads"
-	"go-jvm/ch05/instructions/math"
-	"go-jvm/ch05/instructions/stores"
-	"go-jvm/ch05/rtda"
+	"go-jvm/ch06/instructions/base"
+	"go-jvm/ch06/instructions/loads"
+	"go-jvm/ch06/instructions/math"
+	"go-jvm/ch06/instructions/stores"
+	"go-jvm/ch06/rtda"
 )
 
 //扩展指令
