@@ -162,7 +162,7 @@ var (
 	// freturn = &FRETURN{}
 	// dreturn = &DRETURN{}
 	// areturn = &ARETURN{}
-	// _return = &RETURN{}
+	_return = &RETURN{}
 	// arraylength   = &ARRAY_LENGTH{}
 	// athrow        = &ATHROW{}
 	// monitorenter  = &MONITOR_ENTER{}
@@ -526,8 +526,8 @@ func NewInstruction(opcode byte) base.Instruction {
 	// 	return dreturn
 	// case 0xb0:
 	// 	return areturn
-	// case 0xb1:
-	// 	return _return
+	case 0xb1:
+		return _return
 	case 0xb2:
 		return &GET_STATIC{}
 	case 0xb3:

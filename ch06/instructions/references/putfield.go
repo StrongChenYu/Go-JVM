@@ -45,35 +45,35 @@ func (self *PUT_FIELD) Execute(frame *rtda.Frame)  {
 	case 'Z', 'B', 'C', 'S', 'I':
 		val := stack.PopInt()
 		ref := stack.PopRef()
-		if ref != nil {
+		if ref == nil {
 			panic("java.lang.NullPointerException")
 		}
 		ref.Fields().SetInt(slotId, val)
 	case 'J':
 		val := stack.PopLong()
 		ref := stack.PopRef()
-		if ref != nil {
+		if ref == nil {
 			panic("java.lang.NullPointerException")
 		}
 		ref.Fields().SetLong(slotId, val)
 	case 'F':
 		val := stack.PopFloat()
 		ref := stack.PopRef()
-		if ref != nil {
+		if ref == nil {
 			panic("java.lang.NullPointerException")
 		}
 		ref.Fields().SetFloat(slotId, val)
 	case 'D':
 		val := stack.PopDouble()
 		ref := stack.PopRef()
-		if ref != nil {
+		if ref == nil {
 			panic("java.lang.NullPointerException")
 		}
 		ref.Fields().SetDouble(slotId, val)
 	case 'L', '[':
 		val := stack.PopRef()
 		ref := stack.PopRef()
-		if ref != nil {
+		if ref == nil {
 			panic("java.lang.NullPointerException")
 		}
 		ref.Fields().SetRef(slotId, val)

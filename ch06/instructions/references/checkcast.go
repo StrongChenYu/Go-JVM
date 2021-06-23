@@ -28,4 +28,5 @@ func (self *CHECK_CAST) Execute(frame *rtda.Frame)  {
 		//throw exception
 		panic("java.lang.ClassCastException")
 	}
+	stack.PushRef(ref)
 }
