@@ -94,3 +94,7 @@ func (self *Class) getStaticMethod(name,descriptor string) *Method {
 	}
 	return nil
 }
+
+func (self *Class) Methods() []*Method {
+	return self.methods
+}
