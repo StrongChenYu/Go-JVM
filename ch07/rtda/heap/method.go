@@ -8,7 +8,7 @@ type Method struct {
 	maxStack 		uint
 	maxLocal 		uint
 	code 			[]byte
-	argSlotCount	uint
+	argSlotCount	int
 }
 
 func newMethods(class *Class, cfMethods []*classfile.MemberInfo) []*Method {
@@ -60,7 +60,7 @@ func (self *Method) MaxStack() uint {
 	return self.maxStack
 }
 
-func (self *Method) ArgSlotCount() uint {
+func (self *Method) ArgSlotCount() int {
 	return self.argSlotCount
 }
 
