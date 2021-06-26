@@ -104,3 +104,6 @@ func (self *OperandStack) Size() uint {
 	return self.size
 }
 
+func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
+	return self.slots[self.size - n - 1].ref
+}

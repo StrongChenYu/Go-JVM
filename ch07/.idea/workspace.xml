@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f7f10d8-0267-4c68-bfaf-9c6e02b357ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/rtda/heap/method_lookup.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instructions/references/invokespecial.go" beforeDir="false" afterPath="$PROJECT_DIR$/instructions/references/invokespecial.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rtda/heap/class.go" beforeDir="false" afterPath="$PROJECT_DIR$/rtda/heap/class.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rtda/heap/cp_interface_methodref.go" beforeDir="false" afterPath="$PROJECT_DIR$/rtda/heap/cp_interface_methodref.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rtda/heap/cp_methodref.go" beforeDir="false" afterPath="$PROJECT_DIR$/rtda/heap/cp_methodref.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rtda/heap/class_hierarchy.go" beforeDir="false" afterPath="$PROJECT_DIR$/rtda/heap/class_hierarchy.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rtda/heap/class_member.go" beforeDir="false" afterPath="$PROJECT_DIR$/rtda/heap/class_member.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rtda/heap/method.go" beforeDir="false" afterPath="$PROJECT_DIR$/rtda/heap/method.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rtda/operand_stack.go" beforeDir="false" afterPath="$PROJECT_DIR$/rtda/operand_stack.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +30,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
@@ -44,5 +46,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

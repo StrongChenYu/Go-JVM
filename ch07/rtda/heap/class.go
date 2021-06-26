@@ -38,7 +38,7 @@ func newClass(cf *classfile.ClassFile) *Class {
 
 
 func (self *Class) IsAccessibleTo(other *Class) bool {
-	return self.IsPublic() || self.getPackageName() == other.getPackageName()
+	return self.IsPublic() || self.GetPackageName() == other.GetPackageName()
 }
 
 func (self *Class) IsPublic() bool {
@@ -53,9 +53,13 @@ func (self *Class) IsAbstract() bool {
 	return self.accessFlags & ACC_ABSTRACT != 0
 }
 
+func (self *Class) IsSuper() bool {
+	return self.accessFlags & ACC_SUPER != 0
+}
+
 //input : java/lang/Object
 //output: java/lang
-func (self *Class) getPackageName() string {
+func (self *Class) GetPackageName() string {
 	if i := strings.LastIndex(self.name, "/"); i >= 0 {
 		return self.name[:i]
 	}
@@ -97,4 +101,8 @@ func (self *Class) getStaticMethod(name,descriptor string) *Method {
 
 func (self *Class) Methods() []*Method {
 	return self.methods
+}
+
+func (self *Class) SuperClass() *Class {
+	return self.superClass
 }

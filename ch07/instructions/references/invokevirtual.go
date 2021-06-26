@@ -11,26 +11,59 @@ type INVOKE_VIRTUAL struct { base.Index16Instruction }
 
 
 func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
-	cp := frame.Method().Class().ConstantPool()
+	currentClass := frame.Method().Class()
+	cp := currentClass.ConstantPool()
 	methodRef := cp.GetConstant(self.Index).(*heap.MethodRef)
-	if methodRef.Name() == "println" {
-		stack := frame.OperandStack()
-		switch methodRef.Descriptor() {
-		case "(Z)V":
-			fmt.Printf("%v\n", stack.PopInt() != 0)
-		case "(C)V":
-			fmt.Printf("%c\n", stack.PopInt())
-		case "(I)V", "(B)V", "(S)V":
-			fmt.Printf("%v\n", stack.PopInt())
-		case "(F)V":
-			fmt.Printf("%v\n", stack.PopFloat())
-		case "(J)V":
-			fmt.Printf("%v\n", stack.PopLong())
-		case "(D)V":
-			fmt.Printf("%v\n", stack.PopDouble())
-		default:
-			panic("println: " + methodRef.Descriptor())
-		}
-		stack.PopRef()
+	method := methodRef.ResolvedMethod()
+
+	if method.IsStatic() {
+		panic("java.lang.IncompatibleClassChangeError")
 	}
+
+	//方法第一个参数就是指向实例的对象
+	ref := frame.OperandStack().GetRefFromTop(method.ArgSlotCount() - 1)
+
+	if ref == nil {
+		panic("java.lang.NullPointException")
+	}
+
+
+	//see invokespecial.go find why
+	if method.IsProtected() &&
+		method.Class().IsSuperClassOf(currentClass) &&
+		method.Class().GetPackageName() != currentClass.GetPackageName() &&
+		ref.Class() != currentClass &&
+		ref.Class().IsSubClassOf(currentClass) {
+		panic("java.lang.IllegalAccessError")
+	}
+
+	//在ref中指向的实例代表的类的方法
+	methodToBeInvoked := heap.LookUpMethodInClass(ref.Class(), methodRef.Name(), methodRef.Descriptor())
+
+	if methodToBeInvoked == nil || methodToBeInvoked.IsAbstract() {
+		panic("java.lang.AbstractMethodError")
+	}
+
+	base.InvokeMethod(frame, methodToBeInvoked)
+}
+
+func _println(stack *rtda.OperandStack, descriptor string)  {
+	switch descriptor {
+	case "(Z)V":
+		fmt.Printf("%v\n", stack.PopInt() != 0)
+	case "(C)V":
+		fmt.Printf("%c\n", stack.PopInt())
+	case "(I)V", "(B)V", "(S)V":
+		fmt.Printf("%v\n", stack.PopInt())
+	case "(F)V":
+		fmt.Printf("%v\n", stack.PopFloat())
+	case "(J)V":
+		fmt.Printf("%v\n", stack.PopLong())
+	case "(D)V":
+		fmt.Printf("%v\n", stack.PopDouble())
+	default:
+		panic("println: " + descriptor)
+	}
+	stack.PopRef()
+
 }
