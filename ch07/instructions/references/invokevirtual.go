@@ -24,6 +24,10 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 	ref := frame.OperandStack().GetRefFromTop(method.ArgSlotCount() - 1)
 
 	if ref == nil {
+		if methodRef.Name() == "println" {
+			_println(frame.OperandStack(), methodRef.Descriptor())
+			return
+		}
 		panic("java.lang.NullPointException")
 	}
 

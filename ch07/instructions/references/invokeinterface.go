@@ -33,6 +33,11 @@ func (self *INVOKE_INTERFACE) Execute(frame *rtda.Frame) {
 		panic("java.lang.NullPointException")
 	}
 
+	//看一下有没有实现接口
+	if !ref.Class().IsImplements(methodRef.ResolvedClass()) {
+		panic("java.lang.IncompatibleClassError")
+	}
+
 	methodToBeInvoked := heap.LookUpMethodInClass(ref.Class(), methodRef.Name(), methodRef.Descriptor())
 
 	if methodToBeInvoked == nil || methodToBeInvoked.IsAbstract() {
