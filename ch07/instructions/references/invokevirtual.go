@@ -21,7 +21,7 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 	}
 
 	//方法第一个参数就是指向实例的对象
-	ref := frame.OperandStack().GetRefFromTop(method.ArgSlotCount() - 1)
+	ref := frame.OperandStack().GetRefFromTop(uint(method.ArgSlotCount() - 1))
 
 	if ref == nil {
 		if methodRef.Name() == "println" {

@@ -21,14 +21,14 @@ func main() {
 //?????????????加载别的类会报错？？？记得解决一下
 func startJVM(cmd *Cmd) {
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
-	classLoader := heap.NewClassLoader(cp)
+	classLoader := heap.NewClassLoader(cp, cmd.verboseClassFlag)
 
 	className := strings.Replace(cmd.class, ".", "/", -1)
 	class := classLoader.LoadClass(className)
 
 	mainMethod := class.GetMainMethod()
 
-	interpret(mainMethod)
+	interpret(mainMethod, cmd.verboseInstFlag)
 }
 
 

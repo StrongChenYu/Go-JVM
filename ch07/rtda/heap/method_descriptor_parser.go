@@ -15,7 +15,7 @@ func ParseMethodDescriptor(descriptor string) *MethodDescriptor {
 		offset:           0,
 		methodDescriptor: &MethodDescriptor{
 			parameterTypes: make([]string, 0),
-			returnType:     nil,
+			returnType:     "",
 		},
 	}
 	return parser.parse()
@@ -126,6 +126,7 @@ func (self *MethodDescriptorParser) endParam() {
 func (self *MethodDescriptorParser) parseReturnTypes() {
 	if self.readUint8() == 'V' {
 		self.methodDescriptor.returnType = "V"
+		return
 	}
 
 	self.unreadUint8()
