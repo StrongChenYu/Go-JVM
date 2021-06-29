@@ -51,6 +51,7 @@ func loop(thread *rtda.Thread, logInst bool) {
 		frame.SetNextPC(reader.PC())
 
 		if logInst {
+			//这里会打印操作数
 			logInstruction(frame, inst)
 		}
 		
