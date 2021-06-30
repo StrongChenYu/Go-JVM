@@ -69,6 +69,8 @@ func logInstruction(frame *rtda.Frame, inst base.Instruction) {
 	className := method.Class().Name()
 	methodName := method.Name()
 	pc := frame.Thread().PC()
+	//打印格式
+	//InvokeDemo.main() #10 *control.RETURN &{{}}
 	fmt.Printf("%v.%v() #%2d %T %v\n", className, methodName, pc, inst, inst)
 }
 
