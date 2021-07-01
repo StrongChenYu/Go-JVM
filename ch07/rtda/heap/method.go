@@ -71,3 +71,7 @@ func (self *Method) IsStatic() bool {
 func (self *Method) IsAbstract() bool {
 	return self.accessFlags & ACC_ABSTRACT != 0
 }
+
+func (self *Method) IsNative() bool {
+	return self.accessFlags & ACC_NATIVE != 0
+}

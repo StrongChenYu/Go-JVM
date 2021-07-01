@@ -19,6 +19,9 @@ type Class struct {
 	instanceSlotCount       uint
 	staticSlotCount			uint
 	staticVars 				Slots
+
+	//判断有没有执行cint方法
+	initStarted				bool
 }
 
 
@@ -99,6 +102,10 @@ func (self *Class) getStaticMethod(name,descriptor string) *Method {
 	return nil
 }
 
+func (self *Class) GetclinitMethod() *Method {
+	return self.getStaticMethod("<clinit>", "()V")
+}
+
 func (self *Class) Methods() []*Method {
 	return self.methods
 }
@@ -109,4 +116,12 @@ func (self *Class) SuperClass() *Class {
 
 func (self *Class) Name() string {
 	return self.name
+}
+
+func (self *Class) InitStarted() bool {
+	return self.initStarted
+}
+
+func (self *Class) StartInit() {
+	self.initStarted = true
 }

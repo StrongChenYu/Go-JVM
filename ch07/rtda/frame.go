@@ -51,3 +51,7 @@ func (self *Frame) SetNextPC(pc int) {
 func (self *Frame) Method() *heap.Method {
 	return self.method
 }
+
+func (self *Frame) RevertNextPC()  {
+	self.nextPC = self.thread.pc
+}

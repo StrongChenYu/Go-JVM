@@ -36,6 +36,8 @@ func (self *Thread) CurrentFrame() *Frame {
 	return self.stack.top()
 }
 
+//thread.newFrame 将会产生一个新的栈帧，这个栈帧可以直接由方法产生
+//然后把这个栈帧压入栈顶
 func (self *Thread) NewFrame(method *heap.Method) *Frame {
 	return NewFrame(self, method)
 }
