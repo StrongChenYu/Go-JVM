@@ -37,7 +37,7 @@ func (self *Method) calcArgSlotCount() {
 	methodDescriptor := ParseMethodDescriptor(self.descriptor)
 	for _, paramType := range methodDescriptor.parameterTypes {
 		self.argSlotCount++
-		if paramType == "L" || paramType == "D" {
+		if paramType == "J" || paramType == "D" {
 			self.argSlotCount++
 		}
 	}

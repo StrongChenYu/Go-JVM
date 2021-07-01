@@ -14,8 +14,12 @@ echo "pass test in ch02"
 go run go-jvm/ch03 java.lang.Object | grep -q "this class: java/lang/Object"
 echo "pass test in ch03"
 
-# go run go-jvm/ch04 java.lang.Object 2>&1 | grep -q "100"
-# go run go-jvm/ch05 -cp ../example.jar go-jvm.book.ch05.GaussTest 2>&1 | grep -q "5050"
+go run go-jvm/ch04 java.lang.Object 2>&1 | grep -q "100"
+echo "pass test in ch04"
+
+go run go-jvm/ch05 -cp ../example.jar jvmgo.book.ch05.GaussTest 2>&1 | grep -q "5050"
+echo "pass test in ch05"
+
 # go run go-jvm/ch06 -cp ../example.jar go-jvm.book.ch06.MyObject | grep -q "32768"
 # go run go-jvm/ch07 -cp ../example.jar go-jvm.book.ch07.FibonacciTest | grep -q "832040"
 # go run go-jvm/ch08 -cp ../example.jar go-jvm.book.ch01.HelloWorld  | grep -q "Hello, world!"
