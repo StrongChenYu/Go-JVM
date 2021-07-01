@@ -126,7 +126,10 @@ func (cf *ClassFile) ClassName() string {
 }
 
 func (cf *ClassFile) SuperClassName() string {
-	return cf.constantPool.getClassName(cf.superClass)
+	if cf.superClass > 0 {
+		return cf.constantPool.getClassName(cf.superClass)
+	}
+	return ""
 }
 
 func (cf *ClassFile) InterfaceName() []string {
