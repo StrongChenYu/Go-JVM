@@ -5,11 +5,10 @@ import (
 	"math"
 )
 
-
 //操作栈
 type OperandStack struct {
-	size 		uint
-	slots 		[]Slot
+	size  uint
+	slots []Slot
 }
 
 //操作数栈
@@ -34,7 +33,7 @@ func (self *OperandStack) PopInt() int32 {
 	return self.slots[self.size].num
 }
 
-func (self *OperandStack) PushFloat(val float32)  {
+func (self *OperandStack) PushFloat(val float32) {
 	bits := math.Float32bits(val)
 	self.slots[self.size].num = int32(bits)
 	self.size++
@@ -51,16 +50,16 @@ func (self *OperandStack) PushLong(val int64) {
 	//低32位
 	self.slots[self.size].num = int32(val)
 	//高32位
-	self.slots[self.size + 1].num = int32(val >> 32)
+	self.slots[self.size+1].num = int32(val >> 32)
 	self.size += 2
 }
 
 //slot[low][high]
 func (self *OperandStack) PopLong() int64 {
-	self.size--
-	highBits := uint32(self.slots[self.size].num)
-	lowBits := uint32(self.slots[self.size - 1].num)
-	return int64(highBits) << 32 | int64(lowBits)
+	self.size -= 2
+	highBits := uint32(self.slots[self.size+1].num)
+	lowBits := uint32(self.slots[self.size].num)
+	return int64(highBits)<<32 | int64(lowBits)
 }
 
 //slot[low][high]
@@ -75,7 +74,7 @@ func (self *OperandStack) PopDouble() float64 {
 	return math.Float64frombits(bits)
 }
 
-func (self *OperandStack) PushRef(ref *heap.Object)  {
+func (self *OperandStack) PushRef(ref *heap.Object) {
 	self.slots[self.size].ref = ref
 	self.size++
 }
@@ -103,4 +102,3 @@ func (self *OperandStack) PopSlot() Slot {
 func (self *OperandStack) Size() uint {
 	return self.size
 }
-
