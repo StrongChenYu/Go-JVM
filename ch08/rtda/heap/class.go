@@ -77,8 +77,8 @@ func (self *Class) NewObject() *Object {
 
 func newObject(class *Class) *Object {
 	return &Object{
-		class:  class,
-		fields: newSlots(class.instanceSlotCount),
+		class: class,
+		data:  newSlots(class.instanceSlotCount),
 	}
 }
 
@@ -121,4 +121,15 @@ func (self *Class) InitStarted() bool {
 
 func (self *Class) StartInit() {
 	self.initStarted = true
+}
+
+func (self *Class) Loader() *ClassLoader {
+	return self.loader
+}
+
+func (self *Class) IsArray() bool {
+	if self.name[0] == '[' {
+		return true
+	}
+	return false
 }
