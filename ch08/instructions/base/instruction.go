@@ -1,6 +1,8 @@
 package base
 
-import "go-jvm/ch08/rtda"
+import (
+	"go-jvm/ch08/rtda"
+)
 
 type Instruction interface {
 	FetchOperands(reader *ByteCodeReader)
@@ -49,4 +51,5 @@ func (self *Index16Instruction) FetchOperands(reader *ByteCodeReader) {
 }
 
 func (self Index16Instruction) Execute(frame *rtda.Frame) {
+
 }

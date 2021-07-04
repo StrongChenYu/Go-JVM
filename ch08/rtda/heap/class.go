@@ -128,8 +128,10 @@ func (self *Class) Loader() *ClassLoader {
 }
 
 func (self *Class) IsArray() bool {
-	if self.name[0] == '[' {
-		return true
-	}
-	return false
+	return self.name[0] == '['
+}
+
+func (self *Class) ArrayClass() *Class {
+	arrayClassName := getArrayClassName(self.name)
+	return self.loader.LoadClass(arrayClassName)
 }
