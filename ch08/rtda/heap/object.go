@@ -17,3 +17,15 @@ func (o *Object) Fields() Slots {
 func (o *Object) IsInstanceOf(class *Class) bool {
 	return class.IsAssignableFrom(o.class)
 }
+
+func (self *Object) SetRefVar(name, descriptor string, chars *Object) {
+	field := self.class.getField(name, descriptor, false)
+	slots := self.data.(Slots)
+	slots.SetRef(field.SlodId(), chars)
+}
+
+func (self *Object) GetRefVar(name, descriptor string) *Object {
+	field := self.class.getField(name, descriptor, false)
+	slots := self.data.(Slots)
+	return slots.GetRef(field.slotId)
+}

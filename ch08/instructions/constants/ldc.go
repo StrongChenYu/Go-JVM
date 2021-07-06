@@ -39,13 +39,17 @@ func _ldc(frame *rtda.Frame, index uint) {
 	stack := frame.OperandStack()
 	cp := frame.Method().Class().ConstantPool()
 	constant := cp.GetConstant(index)
+	class := frame.Method().Class()
+	loader := class.Loader()
 
 	switch constant.(type) {
 	case int32:
 		stack.PushInt(constant.(int32))
 	case float32:
 		stack.PushFloat(constant.(float32))
-	case string: //donoting
+	case string:
+		internedStr := heap.JString(loader, constant.(string))
+		stack.PushRef(internedStr)
 	case heap.ClassRef: // donothing
 	default:
 	}
