@@ -32,9 +32,9 @@ func parseCmd() *Cmd {
 	flag.BoolVar(&cmd.helpFlag, "?", false, "print help message")
 	flag.BoolVar(&cmd.versionFlag, "version", false, "print version and exit")
 
-	flag.BoolVar(&cmd.verboseClassFlag, "verbose", true, "enable verbose output")
-	flag.BoolVar(&cmd.verboseClassFlag, "verbose:class", true, "enable verbose output")
-	flag.BoolVar(&cmd.verboseInstFlag, "verbose:inst", true, "enable verbose output")
+	flag.BoolVar(&cmd.verboseClassFlag, "verbose", false, "enable verbose output")
+	flag.BoolVar(&cmd.verboseClassFlag, "verbose:class", false, "enable verbose output")
+	flag.BoolVar(&cmd.verboseInstFlag, "verbose:inst", false, "enable verbose output")
 
 	flag.StringVar(&cmd.cpOption, "classpath", "", "classpath")
 	flag.StringVar(&cmd.cpOption, "cp", "", "classpath")

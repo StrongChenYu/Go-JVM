@@ -36,11 +36,12 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 
 func (self *ClassLoader) loadArrayClass(name string) *Class {
 	class := &Class{
-		accessFlags: ACC_PUBLIC, //todo
-		name:        name,
-		loader:      self,
-		superClass:  self.LoadClass("java/lang/Object"),
-		initStarted: true,
+		accessFlags:    ACC_PUBLIC, //todo
+		name:           name,
+		superClassName: "java/lang/Object",
+		loader:         self,
+		superClass:     self.LoadClass("java/lang/Object"),
+		initStarted:    true,
 		interfaces: []*Class{
 			self.LoadClass("java/lang/Cloneable"),
 			self.LoadClass("java/io/Serializable"),

@@ -261,22 +261,22 @@ func NewInstruction(opcode byte) base.Instruction {
 		return aload_2
 	case 0x2d:
 		return aload_3
-	// case 0x2e:
-	// 	return iaload
-	// case 0x2f:
-	// 	return laload
-	// case 0x30:
-	// 	return faload
-	// case 0x31:
-	// 	return daload
-	// case 0x32:
-	// 	return aaload
-	// case 0x33:
-	// 	return baload
-	// case 0x34:
-	// 	return caload
-	// case 0x35:
-	// 	return saload
+	case 0x2e:
+		return iaload
+	case 0x2f:
+		return laload
+	case 0x30:
+		return faload
+	case 0x31:
+		return daload
+	case 0x32:
+		return aaload
+	case 0x33:
+		return baload
+	case 0x34:
+		return caload
+	case 0x35:
+		return saload
 	case 0x36:
 		return &ISTORE{}
 	case 0x37:
@@ -327,22 +327,22 @@ func NewInstruction(opcode byte) base.Instruction {
 		return astore_2
 	case 0x4e:
 		return astore_3
-	// case 0x4f:
-	// 	return iastore
-	// case 0x50:
-	// 	return lastore
-	// case 0x51:
-	// 	return fastore
-	// case 0x52:
-	// 	return dastore
-	// case 0x53:
-	// 	return aastore
-	// case 0x54:
-	// 	return bastore
-	// case 0x55:
-	// 	return castore
-	// case 0x56:
-	// 	return sastore
+	case 0x4f:
+		return iastore
+	case 0x50:
+		return lastore
+	case 0x51:
+		return fastore
+	case 0x52:
+		return dastore
+	case 0x53:
+		return aastore
+	case 0x54:
+		return bastore
+	case 0x55:
+		return castore
+	case 0x56:
+		return sastore
 	case 0x57:
 		return pop
 	case 0x58:

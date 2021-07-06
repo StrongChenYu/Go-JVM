@@ -3,17 +3,48 @@ package heap
 //check operation follow
 //self a = instance (other type)
 func (self *Class) IsAssignableFrom(other *Class) bool {
+	s, t := other, self
 
-	//判断是否相等
-	if other == self {
-		//如果为true，则判断成功
+	if s == t {
 		return true
 	}
 
-	if self.IsInterface() {
-		return other.IsImplements(self)
+	if !s.IsArray() {
+		if !s.IsInterface() {
+			// s is class
+			if !t.IsInterface() {
+				// t is not interface
+				return s.IsSubClassOf(t)
+			} else {
+				// t is interface
+				return s.IsImplements(t)
+			}
+		} else {
+			// s is interface
+			if !t.IsInterface() {
+				// t is not interface
+				return t.IsJlObject()
+			} else {
+				// t is interface
+				return t.IsSuperInterfaceOf(s)
+			}
+		}
 	} else {
-		return other.IsSubClassOf(self)
+		// s is array
+		if !t.IsArray() {
+			if !t.IsInterface() {
+				// t is class
+				return t.IsJlObject()
+			} else {
+				// t is interface
+				return t.IsJlCloneable() || t.IsJioSerializable()
+			}
+		} else {
+			// t is array
+			sc := s.ComponentClass()
+			tc := t.ComponentClass()
+			return sc == tc || tc.IsAssignableFrom(sc)
+		}
 	}
 
 }
@@ -55,4 +86,8 @@ func (self *Class) isSubInterfaceOf(inter *Class) bool {
 
 func (self *Class) IsSuperClassOf(sonClass *Class) bool {
 	return sonClass.IsSubClassOf(self)
+}
+
+func (self *Class) IsSuperInterfaceOf(s *Class) bool {
+	return s.isSubInterfaceOf(self)
 }

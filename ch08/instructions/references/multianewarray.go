@@ -37,10 +37,14 @@ func popAndCheckCounts(stack *rtda.OperandStack, dimension int) []int32 {
 	return counts
 }
 
+//逐层去加载数组
+//然后需要加载对应的类
 func newMultiDimensionalArray(counts []int32, class *heap.Class) *heap.Object {
 	count := uint(counts[0])
 	arr := class.NewArray(count)
 
+	//arr已经是最底层了
+	//newArray就会初始化到最后一层的数据
 	if len(counts) > 1 {
 		arrRef := arr.Refs()
 		for i := range arrRef {

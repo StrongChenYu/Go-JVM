@@ -135,3 +135,15 @@ func (self *Class) ArrayClass() *Class {
 	arrayClassName := getArrayClassName(self.name)
 	return self.loader.LoadClass(arrayClassName)
 }
+
+func (self *Class) IsJlObject() bool {
+	return self.name == "java/lang/Obejct"
+}
+
+func (self *Class) IsJlCloneable() bool {
+	return self.name == "java/lang/Cloneable"
+}
+
+func (self *Class) IsJioSerializable() bool {
+	return self.name == "java/io/Serializable"
+}
