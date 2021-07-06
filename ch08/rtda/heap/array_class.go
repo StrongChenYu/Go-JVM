@@ -26,3 +26,16 @@ func (self *Class) NewArray(count uint) *Object {
 		return &Object{self, make([]*Object, count)}
 	}
 }
+
+func (self *Class) ComponentClass() *Class {
+	componentClassName := getComponentClassName(self.name)
+	return self.loader.LoadClass(componentClassName)
+}
+
+func getComponentClassName(name string) string {
+	if name[0] == '[' {
+		componentTypeDescriptor := name[1:]
+		return toClassName(componentTypeDescriptor)
+	}
+	panic("Not array: " + name)
+}
