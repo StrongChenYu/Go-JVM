@@ -131,6 +131,9 @@ func (self *Class) IsArray() bool {
 	return self.name[0] == '['
 }
 
+//arrayClass
+//java/lang/Object => [java/lang/Object
+//int => [i
 func (self *Class) ArrayClass() *Class {
 	arrayClassName := getArrayClassName(self.name)
 	return self.loader.LoadClass(arrayClassName)

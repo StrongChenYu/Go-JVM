@@ -27,6 +27,9 @@ func startJVM(cmd *Cmd) {
 	class := classLoader.LoadClass(className)
 
 	mainMethod := class.GetMainMethod()
-
-	interpret(mainMethod, cmd.verboseInstFlag)
+	if mainMethod != nil {
+		interpret(mainMethod, cmd.verboseInstFlag, cmd.args)
+	} else {
+		fmt.Printf("%s don't have main method!\n", class.Name())
+	}
 }

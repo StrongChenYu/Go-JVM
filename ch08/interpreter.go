@@ -8,14 +8,30 @@ import (
 	"go-jvm/ch08/rtda/heap"
 )
 
-func interpret(method *heap.Method, logInst bool) {
+func interpret(method *heap.Method, logInst bool, args []string) {
 
 	thread := rtda.NewThread()
 	frame := thread.NewFrame(method)
 	thread.PushFrame(frame)
+	class := method.Class()
+
+	jArgsRef := goArraysToJStr(class.Loader(), args)
+	frame.LocalVars().SetRef(0, jArgsRef)
 
 	defer catchErr(thread)
 	loop(thread, logInst)
+}
+
+func goArraysToJStr(loader *heap.ClassLoader, goArgs []string) *heap.Object {
+	class := loader.LoadClass("java/lang/String")
+	jArgRef := class.ArrayClass().NewArray(uint(len(goArgs)))
+
+	refs := jArgRef.Refs()
+	for i, goArg := range goArgs {
+		refs[i] = heap.JString(loader, goArg)
+	}
+
+	return jArgRef
 }
 
 //捕获异常

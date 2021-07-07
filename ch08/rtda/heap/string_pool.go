@@ -30,7 +30,7 @@ func stringToUtf16(s string) []uint16 {
 	return utf16.Encode(runes)
 }
 
-func GoString(ref *Object) string {
+func JStrToGoStr(ref *Object) string {
 	field := ref.GetRefVar("value", "[C")
 	return utf16ToString(field.Chars())
 }
