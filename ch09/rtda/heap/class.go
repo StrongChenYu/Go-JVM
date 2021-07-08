@@ -22,6 +22,9 @@ type Class struct {
 
 	//判断有没有执行cint方法
 	initStarted bool
+
+	//指向类对象
+	jClass *Object
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -160,4 +163,12 @@ func (self *Class) getField(name string, descriptor string, isStatic bool) *Fiel
 		}
 	}
 	return nil
+}
+
+func (self *Class) JClass() *Object {
+	return self.jClass
+}
+
+func (self *Class) JavaName() string {
+	return strings.Replace(self.name, "/", ".", -1)
 }

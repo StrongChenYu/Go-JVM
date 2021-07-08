@@ -14,6 +14,7 @@ import . "go-jvm/ch09/instructions/math"
 import . "go-jvm/ch09/instructions/stack"
 import . "go-jvm/ch09/instructions/stores"
 import . "go-jvm/ch09/instructions/references"
+import . "go-jvm/ch09/instructions/reserved"
 
 // NoOperandsInstruction singletons
 var (
@@ -574,7 +575,8 @@ func NewInstruction(opcode byte) base.Instruction {
 	// case 0xc9:
 	// 	return &JSR_W{}
 	// case 0xca: breakpoint
-	// case 0xfe: impdep1
+	case 0xfe:
+		return &INVOKE_NATIVE{}
 	// case 0xff: impdep2
 	default:
 		panic(fmt.Errorf("Unsupported opcode: 0x%x!", opcode))

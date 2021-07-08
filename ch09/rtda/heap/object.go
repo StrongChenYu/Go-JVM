@@ -4,6 +4,11 @@ type Object struct {
 	//用于存放引用类型
 	class *Class
 	data  interface{}
+	extra interface{}
+}
+
+func (o *Object) Extra() interface{} {
+	return o.extra
 }
 
 func (o *Object) Class() *Class {

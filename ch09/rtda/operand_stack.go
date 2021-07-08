@@ -106,3 +106,15 @@ func (self *OperandStack) Size() uint {
 func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
 	return self.slots[self.size-n-1].ref
 }
+
+func (self *OperandStack) PushBoolean(b bool) {
+	if b {
+		self.PushInt(1)
+	} else {
+		self.PushInt(0)
+	}
+}
+
+func (self *OperandStack) PopBoolean() bool {
+	return self.PopInt() == 1
+}
