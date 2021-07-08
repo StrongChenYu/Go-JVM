@@ -1,7 +1,6 @@
 package base
 
 import (
-	"fmt"
 	"go-jvm/ch09/rtda"
 	"go-jvm/ch09/rtda/heap"
 )
@@ -20,15 +19,6 @@ func InvokeMethod(frame *rtda.Frame, method *heap.Method) {
 	if slotCount > 0 {
 		for i := slotCount - 1; i >= 0; i-- {
 			newLocalVars.SetSlot(uint(i), stack.PopSlot())
-		}
-	}
-
-	if method.IsNative() {
-		if method.Name() == "registerNatives" {
-			thread.PopFrame()
-		} else {
-			panic(fmt.Sprintf("native method: %v.%v%v\n",
-				method.Class().Name(), method.Name(), method.Descriptor()))
 		}
 	}
 }
