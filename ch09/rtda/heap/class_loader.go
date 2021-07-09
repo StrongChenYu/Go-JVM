@@ -40,11 +40,11 @@ func (self *ClassLoader) loadBasicClasses() {
 
 func (self *ClassLoader) loadPrimitiveClasses() {
 	for primitiveType, _ := range primitiveTypes {
-		self.loadPrimitiveClasse(primitiveType)
+		self.loadPrimitiveClass(primitiveType)
 	}
 }
 
-func (self *ClassLoader) loadPrimitiveClasse(primitiveType string) {
+func (self *ClassLoader) loadPrimitiveClass(primitiveType string) {
 	class := &Class{
 		accessFlags: ACC_PUBLIC,
 		name:        primitiveType,
@@ -89,6 +89,11 @@ func (self *ClassLoader) loadArrayClass(name string) *Class {
 			self.LoadClass("java/io/Serializable"),
 		},
 	}
+
+	if self.verboseFlag {
+		fmt.Printf("[Loaded primitive Class %s]\n", name)
+	}
+
 	self.classMap[name] = class
 	return class
 }
@@ -97,6 +102,10 @@ func (self *ClassLoader) loadArrayClass(name string) *Class {
 //loadClass -> loadNonArrayClass -> readClass(read byte data)
 //						|
 //						----------> defineClass(byte data ---> Class)
+//						|               |
+//                      |               |--------->1. byte data to Class
+//						|               |--------->2. loadSuperClass()
+//                      |               |--------->3. loadInterfaceClass()
 //						|
 //						----------> link------> verify (do nothing)
 //										|

@@ -8,8 +8,8 @@ import (
 
 func init() {
 	native.Register("java/lang/Object", "getClass", "()Ljava/lang/Class;", getClass)
-	native.Register("java/lang/Class", "getPrimitiveClass", "[Ljava/lang/String;)Ljava/lang/Class;", getPrimitiveClass)
-	native.Register("java/lang/Class", "getName0", "()Ljava/lang/String", getName0)
+	native.Register("java/lang/Class", "getPrimitiveClass", "(Ljava/lang/String;)Ljava/lang/Class;", getPrimitiveClass)
+	native.Register("java/lang/Class", "getName0", "()Ljava/lang/String;", getName0)
 	native.Register("java/lang/Class", "desiredAssertionStatus0", "(Ljava/lang/Class;)Z", desiredAssertionStatus0)
 }
 

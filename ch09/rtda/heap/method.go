@@ -43,7 +43,7 @@ func (self *Method) injectCodeAttribute(returnType string) {
 	self.maxLocal = uint(self.argSlotCount)
 
 	switch returnType[0] {
-	case 'v':
+	case 'V':
 		self.code = []byte{0xfe, 0xb1}
 	case 'D':
 		self.code = []byte{0xfe, 0xaf}
