@@ -13,10 +13,10 @@ func interpret(method *heap.Method, logInst bool, args []string) {
 	thread := rtda.NewThread()
 	frame := thread.NewFrame(method)
 	thread.PushFrame(frame)
-	class := method.Class()
+	//class := method.Class()
 
-	jArgsRef := goArraysToJStr(class.Loader(), args)
-	frame.LocalVars().SetRef(0, jArgsRef)
+	//jArgsRef := goArraysToJStr(class.Loader(), args)
+	//frame.LocalVars().SetRef(0, jArgsRef)
 
 	defer catchErr(thread)
 	loop(thread, logInst)

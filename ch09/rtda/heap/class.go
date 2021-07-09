@@ -172,3 +172,8 @@ func (self *Class) JClass() *Object {
 func (self *Class) JavaName() string {
 	return strings.Replace(self.name, "/", ".", -1)
 }
+
+func (self *Class) IsPrimitive() bool {
+	_, ok := primitiveTypes[self.name]
+	return ok
+}
