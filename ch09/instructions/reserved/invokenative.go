@@ -7,6 +7,7 @@ import (
 )
 
 import _ "go-jvm/ch09/native/java/lang"
+import _ "go-jvm/ch09/native/sun/misc"
 
 type INVOKE_NATIVE struct{ base.NoOperandsInstruction }
 
