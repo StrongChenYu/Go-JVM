@@ -10,6 +10,19 @@ func init() {
 	native.Register("java/lang/Object", "getClass", "()Ljava/lang/Class;", getClass)
 	//public native int hashCode();
 	native.Register("java/lang/Object", "hashCode", "()I", hashCode)
+	//protected native Object clone() throws CloneNotSupportedException;
+	native.Register("java/lang/Object", "clone", "()Ljava/lang/Object;", clone)
+}
+
+func clone(frame *rtda.Frame) {
+	this := frame.LocalVars().GetThis()
+	cloneable := this.Class().Loader().LoadClass("java/lang/Cloneable")
+
+	if !this.Class().IsImplements(cloneable) {
+		panic("java.lang.CloneNotSupportedException")
+	}
+
+	frame.OperandStack().PushRef(this.Clone())
 }
 
 func hashCode(frame *rtda.Frame) {
