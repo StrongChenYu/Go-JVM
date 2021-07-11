@@ -5,10 +5,11 @@ import "go-jvm/ch10/classfile"
 //描述方法的
 type Method struct {
 	ClassMember
-	maxStack     uint
-	maxLocal     uint
-	code         []byte
-	argSlotCount int
+	maxStack       uint
+	maxLocal       uint
+	code           []byte
+	argSlotCount   int
+	exceptionTable ExceptionTable
 }
 
 func newMethods(class *Class, cfMethods []*classfile.MemberInfo) []*Method {
@@ -63,6 +64,7 @@ func (self *Method) copyCodeAttributes(cfMethod *classfile.MemberInfo) {
 		self.maxStack = uint(codeAttr.MaxStack())
 		self.maxLocal = uint(codeAttr.MaxLocals())
 		self.code = codeAttr.Code()
+		self.exceptionTable = newExceptionTable(codeAttr.ExceptionTable(), self.class.constantPool)
 	}
 }
 
@@ -78,6 +80,14 @@ func (self *Method) calcArgSlotCount(parameterTypes []string) {
 	if !self.IsStatic() {
 		self.argSlotCount++
 	}
+}
+
+func (self *Method) FindExceptionHandler(exClass *Class, pc int) int {
+	handler := self.exceptionTable.findExceptionHandler(exClass, pc)
+	if handler != nil {
+		return handler.handlerPc
+	}
+	return -1
 }
 
 func (self *Method) Code() []byte {

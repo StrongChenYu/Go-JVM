@@ -12,6 +12,10 @@ type CodeAttribute struct {
 	attributes     []AttributeInfo
 }
 
+func (c *CodeAttribute) ExceptionTable() []*ExceptionTableEntry {
+	return c.exceptionTable
+}
+
 func (c *CodeAttribute) Code() []byte {
 	return c.code
 }
@@ -66,4 +70,20 @@ type ExceptionTableEntry struct {
 	endPc     uint16
 	handlerPc uint16
 	catchType uint16
+}
+
+func (e ExceptionTableEntry) StartPc() uint16 {
+	return e.startPc
+}
+
+func (e ExceptionTableEntry) EndPc() uint16 {
+	return e.endPc
+}
+
+func (e ExceptionTableEntry) CatchType() uint16 {
+	return e.catchType
+}
+
+func (e ExceptionTableEntry) HandlerPc() uint16 {
+	return e.handlerPc
 }

@@ -84,8 +84,8 @@ func (self *Class) isSubInterfaceOf(inter *Class) bool {
 	return false
 }
 
-func (self *Class) IsSuperClassOf(sonClass *Class) bool {
-	return sonClass.IsSubClassOf(self)
+func (father *Class) IsSuperClassOf(sonClass *Class) bool {
+	return sonClass.IsSubClassOf(father)
 }
 
 func (self *Class) IsSuperInterfaceOf(s *Class) bool {
