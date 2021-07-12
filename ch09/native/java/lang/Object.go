@@ -3,39 +3,32 @@ package lang
 import (
 	"go-jvm/ch09/native"
 	"go-jvm/ch09/rtda"
-	"go-jvm/ch09/rtda/heap"
+	"unsafe"
 )
 
 func init() {
 	native.Register("java/lang/Object", "getClass", "()Ljava/lang/Class;", getClass)
-	native.Register("java/lang/Class", "getPrimitiveClass", "(Ljava/lang/String;)Ljava/lang/Class;", getPrimitiveClass)
-	native.Register("java/lang/Class", "getName0", "()Ljava/lang/String;", getName0)
-	native.Register("java/lang/Class", "desiredAssertionStatus0", "(Ljava/lang/Class;)Z", desiredAssertionStatus0)
+	//public native int hashCode();
+	native.Register("java/lang/Object", "hashCode", "()I", hashCode)
+	//protected native Object clone() throws CloneNotSupportedException;
+	native.Register("java/lang/Object", "clone", "()Ljava/lang/Object;", clone)
 }
 
-func desiredAssertionStatus0(frame *rtda.Frame) {
-	// todo
-	frame.OperandStack().PushBoolean(false)
-}
-
-func getName0(frame *rtda.Frame) {
+func clone(frame *rtda.Frame) {
 	this := frame.LocalVars().GetThis()
-	class := this.Extra().(*heap.Class)
+	cloneable := this.Class().Loader().LoadClass("java/lang/Cloneable")
 
-	name := class.JavaName()
-	nameObj := heap.JString(class.Loader(), name)
+	if !this.Class().IsImplements(cloneable) {
+		panic("java.lang.CloneNotSupportedException")
+	}
 
-	frame.OperandStack().PushRef(nameObj)
+	frame.OperandStack().PushRef(this.Clone())
 }
 
-func getPrimitiveClass(frame *rtda.Frame) {
-	nameObj := frame.LocalVars().GetRef(0)
-	name := heap.JStrToGoStr(nameObj)
-
-	loader := frame.Method().Class().Loader()
-	class := loader.LoadClass(name).JClass()
-
-	frame.OperandStack().PushRef(class)
+func hashCode(frame *rtda.Frame) {
+	this := frame.LocalVars().GetThis()
+	hash := int32(uintptr(unsafe.Pointer(this)))
+	frame.OperandStack().PushInt(hash)
 }
 
 func getClass(frame *rtda.Frame) {

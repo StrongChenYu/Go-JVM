@@ -17,6 +17,7 @@ func (self *INSTANCE_OF) Execute(frame *rtda.Frame) {
 	//null instanceof class always null
 	if ref == nil {
 		stack.PushInt(0)
+		return
 	}
 
 	cp := frame.Method().Class().ConstantPool()

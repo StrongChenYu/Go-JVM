@@ -172,3 +172,21 @@ func (self *Class) JClass() *Object {
 func (self *Class) JavaName() string {
 	return strings.Replace(self.name, "/", ".", -1)
 }
+
+func (self *Class) IsPrimitive() bool {
+	_, ok := primitiveTypes[self.name]
+	return ok
+}
+
+func (self *Class) GetInstanceMethod(name string, descriptor string) *Method {
+	return self.getStaticMethod(name, descriptor)
+}
+
+func (self *Class) GetRefVar(fieldName, fieldDescriptor string) *Object {
+	field := self.getField(fieldName, fieldDescriptor, true)
+	return self.staticVars.GetRef(field.slotId)
+}
+func (self *Class) SetRefVar(fieldName, fieldDescriptor string, ref *Object) {
+	field := self.getField(fieldName, fieldDescriptor, true)
+	self.staticVars.SetRef(field.slotId, ref)
+}
