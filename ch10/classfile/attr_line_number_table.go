@@ -37,7 +37,7 @@ func (l *LineNumberTableAttribute) readInfo(reader *ClassReader) {
 //为什么传入的是frame的nextpc-1
 //因为这样的话起始找到的就是出错的那一行代码的lineNumber
 func (self *LineNumberTableAttribute) GetLineNumber(pc int) int {
-	for i := len(self.lineNumberTable); i >= 0; i-- {
+	for i := len(self.lineNumberTable) - 1; i >= 0; i-- {
 		entry := self.lineNumberTable[i]
 		if pc >= int(entry.startPc) {
 			return int(entry.lineNumber)

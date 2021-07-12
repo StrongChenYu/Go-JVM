@@ -1,6 +1,7 @@
 package lang
 
 import (
+	"fmt"
 	"go-jvm/ch10/native"
 	"go-jvm/ch10/rtda"
 	"go-jvm/ch10/rtda/heap"
@@ -13,9 +14,14 @@ type StackTraceElement struct {
 	lineNumber int
 }
 
+func (self *StackTraceElement) String() string {
+	return fmt.Sprintf("%s.%s(%s:%d)",
+		self.className, self.methodName, self.fileName, self.lineNumber)
+}
+
 func init() {
 	//private native Throwable fillInStackTrace(int dummy);
-	native.Register("java/lang/Throwable", "fillInStackTrace", "(I)Ljava/lang/Throwable", fillInStackTrace)
+	native.Register("java/lang/Throwable", "fillInStackTrace", "(I)Ljava/lang/Throwable;", fillInStackTrace)
 }
 
 func fillInStackTrace(frame *rtda.Frame) {

@@ -35,7 +35,7 @@ func handlerUncaughtException(thread *rtda.Thread, ex *heap.Object) {
 		ste := stes.Index(i).Interface().(interface {
 			String() string
 		})
-		println("\tat" + ste.String())
+		println("\tat " + ste.String())
 	}
 }
 
