@@ -7,6 +7,10 @@ type Object struct {
 	extra interface{}
 }
 
+func (self *Object) SetExtra(extra interface{}) {
+	self.extra = extra
+}
+
 func (o *Object) Extra() interface{} {
 	return o.extra
 }

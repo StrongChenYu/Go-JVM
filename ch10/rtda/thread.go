@@ -45,3 +45,15 @@ func (self *Thread) NewFrame(method *heap.Method) *Frame {
 func (self *Thread) IsStackEmpty() bool {
 	return self.stack.IsEmpty()
 }
+
+func (self *Thread) ClearStack() {
+	self.stack.clear()
+}
+
+func (self *Thread) GetFrames() []*Frame {
+	frames := make([]*Frame, 0, self.stack.size)
+	for frameTop := self.stack._top; frameTop != nil; frameTop = frameTop.lower {
+		frames = append(frames, frameTop)
+	}
+	return frames
+}

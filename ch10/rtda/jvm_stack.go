@@ -10,6 +10,12 @@ type Stack struct {
 	_top    *Frame
 }
 
+func (self *Stack) clear() {
+	for !self.IsEmpty() {
+		self.pop()
+	}
+}
+
 //生成栈
 func newStack(maxSize uint) *Stack {
 	return &Stack{
