@@ -38,7 +38,14 @@ func createStackTraceElements(tObj *heap.Object, thread *rtda.Thread) []*StackTr
 }
 
 func createStackTraceElement(frame *rtda.Frame) *StackTraceElement {
-	return nil
+	method := frame.Method()
+	class := method.Class()
+	return &StackTraceElement{
+		fileName:   class.SourceFile(),
+		className:  class.Name(),
+		methodName: method.Name(),
+		lineNumber: method.GetLineNumber(frame.NextPC() - 1),
+	}
 }
 
 func distanceToObject(class *heap.Class) int {

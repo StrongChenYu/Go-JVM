@@ -5,11 +5,12 @@ import "go-jvm/ch10/classfile"
 //描述方法的
 type Method struct {
 	ClassMember
-	maxStack       uint
-	maxLocal       uint
-	code           []byte
-	argSlotCount   int
-	exceptionTable ExceptionTable
+	maxStack        uint
+	maxLocal        uint
+	code            []byte
+	argSlotCount    int
+	exceptionTable  ExceptionTable
+	lineNumberTable *classfile.LineNumberTableAttribute
 }
 
 func newMethods(class *Class, cfMethods []*classfile.MemberInfo) []*Method {
@@ -64,6 +65,7 @@ func (self *Method) copyCodeAttributes(cfMethod *classfile.MemberInfo) {
 		self.maxStack = uint(codeAttr.MaxStack())
 		self.maxLocal = uint(codeAttr.MaxLocals())
 		self.code = codeAttr.Code()
+		self.lineNumberTable = codeAttr.LineNumberAttribute()
 		self.exceptionTable = newExceptionTable(codeAttr.ExceptionTable(), self.class.constantPool)
 	}
 }
@@ -116,4 +118,16 @@ func (self *Method) IsAbstract() bool {
 
 func (self *Method) IsNative() bool {
 	return self.accessFlags&ACC_NATIVE != 0
+}
+
+func (self *Method) GetLineNumber(pc int) int {
+	if self.IsNative() {
+		return -2
+	}
+
+	if self.lineNumberTable == nil {
+		return -1
+	}
+
+	return self.lineNumberTable.GetLineNumber(pc)
 }

@@ -25,6 +25,13 @@ type Class struct {
 
 	//指向类对象
 	jClass *Object
+
+	//源文件字符串
+	sourceFile string
+}
+
+func (self *Class) SourceFile() string {
+	return self.sourceFile
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -38,7 +45,15 @@ func newClass(cf *classfile.ClassFile) *Class {
 	class.constantPool = newConstantPool(class, cf.ConstantPool())
 	class.fields = newFields(class, cf.Fields())
 	class.methods = newMethods(class, cf.Methods())
+	class.sourceFile = getSourceFile(cf)
 	return class
+}
+
+func getSourceFile(cf *classfile.ClassFile) string {
+	if sfAttr := cf.SourceFileAttribute(); sfAttr != nil {
+		return sfAttr.FileName()
+	}
+	return "Unknown"
 }
 
 func (self *Class) IsAccessibleTo(other *Class) bool {
